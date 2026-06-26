@@ -29,6 +29,39 @@
     -webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+  .layout{
+    display:flex;
+    gap:36px;
+    max-width:1340px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .main-col{flex:1 1 auto; min-width:0;}
+  .sidebar{
+    flex:0 0 320px;
+    position:sticky;
+    top:24px;
+    padding-right:28px;
+  }
+  .sidebar-box{
+    border:1px solid var(--ink);
+    background:#fff;
+  }
+  .sidebar-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--paper);background:var(--oxblood);
+    padding:10px 14px;
+  }
+  .sidebar-body{padding:14px;max-height:720px;overflow-y:auto;}
+  @media (max-width:1180px){
+    .layout{flex-direction:column;max-width:980px;}
+    .sidebar{
+      position:static;width:100%;flex:1 1 auto;padding-right:0;
+      order:2;margin-top:8px;
+    }
+    .main-col{order:1;}
+  }
   a{color:var(--oxblood);text-decoration:none;border-bottom:1px solid currentColor;}
   a:hover{opacity:.75;}
   .eyebrow{
@@ -294,7 +327,8 @@
   <div><div class="num">1</div><div class="lab">Misión oficial al exterior registrada</div></div>
 </div>
 
-<main class="wrap">
+<div class="layout">
+<main class="wrap main-col">
 
   <!-- COMISIONES -->
   <section id="comisiones">
@@ -413,19 +447,19 @@
     </div>
   </section>
 
-  <!-- X / TWITTER -->
-  <section id="redes">
-    <div class="sec-head" data-target="content-redes">
-      <span class="sec-num">08</span><h2>Actividad en X</h2><span class="chevron">▸</span>
-    </div>
-    <p class="sec-intro">Timeline en vivo de su cuenta oficial — se actualiza solo cada vez que publica algo nuevo, sin que nosotros tengamos que tocar nada.</p>
-    <div class="sec-content" id="content-redes">
-      <a class="twitter-timeline" data-height="600" data-theme="light" href="https://twitter.com/Dip_ConradoRod?ref_src=twsrc%5Etfw">Tweets de @Dip_ConradoRod</a>
+</main>
+
+<aside class="sidebar">
+  <div class="sidebar-box">
+    <div class="sidebar-label">En vivo · X</div>
+    <div class="sidebar-body">
+      <a class="twitter-timeline" data-height="650" data-theme="light" href="https://twitter.com/Dip_ConradoRod?ref_src=twsrc%5Etfw">Tweets de @Dip_ConradoRod</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-  </section>
+  </div>
+</aside>
 
-</main>
+</div>
 
 <footer class="wrap">
   <p><strong>Sobre esta ficha:</strong> construida a partir de fuentes públicas del Parlamento del Uruguay (parlamento.gub.uy) — actuación parlamentaria, proyectos presentados y pedidos de informes — y de prensa abierta. Es un prototipo de lo que será una ficha completa por cada legislador, incluyendo en una próxima versión el texto textual de sus intervenciones en sala extraído de los Diarios de Sesión.</p>
