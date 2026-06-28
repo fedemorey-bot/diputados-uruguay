@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conrado Rodríguez — Expediente Parlamentario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F1E6;
+    --paper-deep:#EFE7D6;
+    --ink:#1C2B45;
+    --ink-soft:#4A5670;
+    --oxblood:#7A2E2E;
+    --gold:#A9803E;
+    --line:#D9CFB8;
+    --green:#3C5A40;
+    --max:980px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+  .layout{
+    display:flex;
+    gap:36px;
+    max-width:1340px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .main-col{flex:1 1 auto; min-width:0;}
+  .sidebar{
+    flex:0 0 320px;
+    position:sticky;
+    top:24px;
+    padding-right:28px;
+  }
+  .sidebar-box{
+    border:1px solid var(--ink);
+    background:#fff;
+  }
+  .sidebar-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--paper);background:var(--oxblood);
+    padding:10px 14px;
+  }
+  .sidebar-body{padding:14px;max-height:720px;overflow-y:auto;}
+  @media (max-width:1180px){
+    .layout{flex-direction:column;max-width:980px;}
+    .sidebar{
+      position:static;width:100%;flex:1 1 auto;padding-right:0;
+      order:2;margin-top:8px;
+    }
+    .main-col{order:1;}
+  }
+  a{color:var(--oxblood);text-decoration:none;border-bottom:1px solid currentColor;}
+  a:hover{opacity:.75;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+  h2{font-size:28px;font-weight:600;color:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    border-bottom:1px solid var(--line);
+    padding:56px 0 40px;
+    position:relative;
+  }
+  .stamp{
+    position:absolute;
+    top:48px; right:28px;
+    width:104px;height:104px;
+    border:1.5px solid var(--oxblood);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    transform:rotate(-9deg);
+    color:var(--oxblood);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.06em;
+    line-height:1.5;
+    opacity:.75;
+    text-transform:uppercase;
+  }
+  .hero-inner{display:flex;gap:32px;align-items:flex-start;}
+  .photo{
+    width:152px;height:190px;
+    object-fit:cover;
+    border:1px solid var(--ink);
+    box-shadow:6px 6px 0 var(--gold);
+    background:#ddd;
+    flex-shrink:0;
+  }
+  .hero-text h1{font-size:44px;line-height:1.02;color:var(--ink);}
+  .hero-role{margin-top:8px;font-size:16.5px;color:var(--ink-soft);max-width:520px;}
+  .hero-tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    padding:5px 10px;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .tag.party{background:var(--oxblood);color:var(--paper);border-color:var(--oxblood);}
+  .hero-social{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;}
+  .hero-social a{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;
+    color:var(--ink-soft);border-bottom:1px solid var(--line);
+  }
+  .hero-social a:hover{color:var(--oxblood);border-bottom-color:var(--oxblood);}
+
+  /* ---------- AT A GLANCE ---------- */
+  .glance{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid var(--line);
+  }
+  .glance div{
+    padding:22px 28px;
+    border-right:1px solid var(--line);
+  }
+  .glance div:last-child{border-right:none;}
+  .glance .num{font-family:'Fraunces',serif;font-size:32px;font-weight:600;color:var(--oxblood);}
+  .glance .lab{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+
+  /* ---------- SECTION ---------- */
+  section{padding:52px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-head{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:0;
+    cursor:pointer;user-select:none;
+  }
+  .sec-head:hover h2{color:var(--oxblood);}
+  .chevron{
+    margin-left:auto;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:16px;color:var(--gold);
+    transition:transform .25s ease;
+    flex-shrink:0;
+  }
+  .sec-head.open .chevron{transform:rotate(90deg);}
+  .sec-num{font-family:'IBM Plex Mono',monospace;color:var(--gold);font-size:13px;}
+  .sec-intro{max-width:640px;color:var(--ink-soft);font-size:15px;margin:10px 0 0;line-height:1.55;}
+  .sec-content{
+    display:none;
+    margin-top:26px;
+    animation:fadeIn .25s ease;
+  }
+  .sec-content.open{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+  .sec-hint{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);margin-top:6px;opacity:.7;}
+
+  /* ---------- COMISIONES ---------- */
+  .com-list{border-top:1px solid var(--line);}
+  .com-row{
+    display:grid;
+    grid-template-columns:1fr 140px 160px;
+    gap:16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14.5px;
+    align-items:baseline;
+  }
+  .com-row .name{font-weight:600;}
+  .com-row .role{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--gold);text-transform:uppercase;}
+  .com-row .cuerpo{color:var(--ink-soft);font-size:13px;text-align:right;}
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{position:relative;padding-left:26px;border-left:2px solid var(--gold);}
+  .tl-item{position:relative;margin-bottom:30px;}
+  .tl-item::before{
+    content:'';
+    position:absolute;left:-32px;top:5px;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--oxblood);
+  }
+  .tl-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--oxblood);font-weight:500;}
+  .tl-badge{
+    display:inline-block;margin-left:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    text-transform:uppercase;letter-spacing:.05em;
+    padding:2px 7px;border-radius:2px;
+    background:var(--paper-deep);color:var(--ink-soft);border:1px solid var(--line);
+  }
+  .tl-title{font-size:16px;font-weight:600;margin-top:6px;}
+  .tl-desc{font-size:14px;color:var(--ink-soft);margin-top:4px;line-height:1.55;max-width:680px;}
+  .tl-ref{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);margin-top:6px;}
+
+  /* ---------- EXPEDIENTE ROWS (proyectos / informes desplegables) ---------- */
+  .exp-list{border-top:1px solid var(--ink);}
+  .exp-row{border-bottom:1px solid var(--line);}
+  .exp-head{
+    display:grid;
+    grid-template-columns:1fr 100px 150px;
+    gap:14px;align-items:baseline;
+    padding:15px 6px;cursor:pointer;user-select:none;
+  }
+  .exp-head:hover{background:rgba(169,128,62,.07);}
+  .exp-title{font-size:14.5px;font-weight:600;line-height:1.35;}
+  .exp-title .mini-chevron{
+    display:inline-block;margin-right:8px;color:var(--gold);
+    transition:transform .2s ease;font-family:'IBM Plex Mono',monospace;
+  }
+  .exp-head.open .mini-chevron{transform:rotate(90deg);}
+  .carpeta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+  .estado{font-size:12px;text-align:right;}
+  .estado.aprobado{color:var(--green);font-weight:600;}
+  .estado.archivado{color:var(--ink-soft);}
+  .estado.comision{color:var(--gold);}
+  .exp-body{
+    display:none;
+    padding:0 6px 22px 30px;
+    font-size:13.5px;color:var(--ink-soft);line-height:1.6;
+  }
+  .exp-body.open{display:block;animation:fadeIn .2s ease;}
+  .exp-body .label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold);
+    text-transform:uppercase;letter-spacing:.06em;margin-top:12px;display:block;
+  }
+  .exp-body .label:first-child{margin-top:2px;}
+  .exp-body .val{color:var(--ink);margin-top:3px;}
+  .exp-body .tramite-row{display:flex;gap:10px;margin-top:4px;}
+  .exp-body .tramite-row .fecha{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);flex-shrink:0;width:80px;}
+  @media (max-width:720px){
+    .exp-head{grid-template-columns:1fr;gap:4px;}
+    .estado{text-align:left;}
+  }
+
+  /* ---------- PRESS GRID ---------- */
+  .press-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .press-card{
+    border:1px solid var(--line);padding:18px;background:var(--paper-deep);
+  }
+  .press-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);}
+  .press-title{font-size:14.5px;font-weight:600;margin-top:6px;line-height:1.35;}
+  .press-src{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+
+  /* ---------- TRAVEL ---------- */
+  .travel-card{
+    border:1px solid var(--ink);
+    background:#fff;
+    padding:26px;
+    position:relative;
+  }
+  .travel-card::before{
+    content:'EXPEDIENTE DE VIAJE';
+    position:absolute;top:-10px;left:24px;
+    background:var(--paper);padding:0 8px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.1em;color:var(--oxblood);
+  }
+  blockquote{
+    margin:16px 0 0;padding-left:16px;border-left:3px solid var(--gold);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--ink);
+  }
+
+  .note{
+    font-size:13px;color:var(--ink-soft);background:var(--paper-deep);
+    border-left:3px solid var(--gold);padding:12px 16px;margin-top:18px;
+  }
+
+  footer{padding:40px 0 70px;}
+  footer p{font-size:12.5px;color:var(--ink-soft);line-height:1.6;max-width:640px;}
+
+  @media (max-width:720px){
+    .hero-inner{flex-direction:column;}
+    .stamp{display:none;}
+    .glance{grid-template-columns:1fr 1fr;}
+    .glance div{border-bottom:1px solid var(--line);}
+    .com-row{grid-template-columns:1fr;gap:4px;}
+    .com-row .cuerpo{text-align:left;}
+    .press-grid{grid-template-columns:1fr;}
+    h1{font-size:34px !important;}
+    table, thead, tbody, th, td, tr{font-size:13px;}
+  }
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <img class="photo" src="https://parlamento.gub.uy/sites/default/files/styles/large/public/personas/avatars/Foto115972.jpg?itok=-8e0qDyA" alt="Foto de Conrado Rodríguez">
+    <div class="hero-text">
+      <div class="eyebrow">Cámara de Representantes · Legislatura L (2025–2030)</div>
+      <h1>Conrado Rodríguez</h1>
+      <p class="hero-role">Representante Nacional por Montevideo. Abogado. En su cuarto período como diputado, además Parlamentario del Mercosur (PARLASUR) y presidente de su Comisión de Presupuesto.</p>
+      <div class="hero-tags">
+        <span class="tag party">Partido Colorado</span>
+        <span class="tag">Montevideo</span>
+        <span class="tag">PARLASUR</span>
+        <span class="tag">Ex 2º Vicepresidente de la Cámara</span>
+      </div>
+      <div class="hero-social">
+        <a href="mailto:conrodriguez@parlamento.gub.uy">✉ Email</a>
+        <a href="https://www.instagram.com/conradorodriguezuy/?hl=es" target="_blank">Instagram</a>
+        <a href="https://x.com/dip_conradorod" target="_blank">X / Twitter</a>
+        <a href="https://www.facebook.com/DiputadoConradoRodriguez/" target="_blank">Facebook</a>
+        <a href="https://es.wikipedia.org/wiki/Conrado_Rodríguez" target="_blank">Wikipedia</a>
+      </div>
+    </div>
+  </div>
+  <div class="stamp">Expediente<br>Legislativo<br>N.º 11597</div>
+</header>
+
+<div class="glance wrap" style="padding-left:0;padding-right:0;">
+  <div><div class="num">8</div><div class="lab">Comisiones que integra</div></div>
+  <div><div class="num">21</div><div class="lab">Proyectos presentados (25–26)</div></div>
+  <div><div class="num">6</div><div class="lab">Pedidos de informes</div></div>
+  <div><div class="num">1</div><div class="lab">Misión oficial al exterior registrada</div></div>
+</div>
+
+<main class="wrap">
+
+  <!-- COMISIONES -->
+  <section id="comisiones">
+    <div class="sec-head" data-target="content-comisiones">
+      <span class="sec-num">01</span><h2>Comisiones que integra</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">Donde se discute el detalle técnico de los proyectos antes de llegar al plenario. Rodríguez tiene asiento en ocho, incluida la conducción del análisis presupuestal.</p>
+    <div class="sec-content" id="content-comisiones">
+      <div class="com-list">
+        <div class="com-row"><div class="name">Presupuestos integrada con Hacienda</div><div class="role">Miembro</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Hacienda</div><div class="role">Miembro</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Hacienda integrada con Transporte, Comunicaciones y Obras Públicas</div><div class="role">Miembro</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Lavado de Activos</div><div class="role">Miembro</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Población y Desarrollo</div><div class="role">Vicepresidente</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Educación y Cultura</div><div class="role">Delegado de sector</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Legislación del Trabajo y Seguridad Social</div><div class="role">Delegado de sector</div><div class="cuerpo">Cámara de Representantes</div></div>
+        <div class="com-row"><div class="name">Especial de Seguimiento de la Situación Carcelaria</div><div class="role">Miembro</div><div class="cuerpo">Asamblea General</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIAJES -->
+  <section id="viajes">
+    <div class="sec-head" data-target="content-viajes">
+      <span class="sec-num">02</span><h2>Viajes y misiones al exterior</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">No existe todavía, del lado del Parlamento, un listado público único y descargable de viajes por legislador (a diferencia de proyectos o pedidos de informes). Esta sección se construye por ahora a partir de prensa y se irá completando.</p>
+    <div class="sec-content" id="content-viajes">
+      <div class="travel-card">
+        <div class="eyebrow" style="margin-top:6px;">Diciembre 2025 · Israel</div>
+        <h3 style="font-size:20px;margin-top:6px;">Visita oficial de una delegación parlamentaria multipartidaria</h3>
+        <p class="tl-desc" style="max-width:none;margin-top:10px;">
+          Viaje de siete días junto a otros 14 legisladores (Partido Nacional y Partido Colorado), por invitación de la Embajada de Israel en Uruguay. La delegación recorrió escenarios de la masacre del 7 de octubre de 2023, la frontera con Líbano y Siria, la Universidad Hebrea de Jerusalén, la Plaza de los Secuestrados en Tel Aviv y el museo del Holocausto Yad Vashem, además de reuniones en la Knesset y la cancillería israelí.
+        </p>
+        <blockquote>
+          "Es muy importante ver in situ cuál es el sentimiento de los israelíes con respecto a lo que se vive en la actualidad, principalmente desde los tristes episodios del 7 de octubre de 2023."
+        </blockquote>
+        <p class="tl-ref">Fuente: El Telégrafo / Semanario Hebreo Jai, vía CCIU — 03·12·2025</p>
+        <p class="note">Conexión con su trabajo legislativo: en abril de 2025 había presentado dos proyectos relacionados — un memorial a las víctimas del 7-O (CRR/187/2025) y una ley que castiga la negación del Holocausto (CRR/188/2025).</p>
+      </div>
+      <p class="note" style="margin-top:18px;">Además, por su rol como Parlamentario del MERCOSUR (preside la Comisión de Presupuesto y Asuntos Internos del PARLASUR), viaja regularmente a las sesiones plenarias del organismo, que rotan entre los países miembro. Estamos completando el detalle de esas fechas.</p>
+    </div>
+  </section>
+
+  <!-- ACTUACIÓN / LÍNEA DE TIEMPO -->
+  <section id="actuacion">
+    <div class="sec-head" data-target="content-actuacion">
+      <span class="sec-num">03</span><h2>Actuación parlamentaria</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">Hitos desde el inicio de esta legislatura hasta junio de 2026, a partir del registro oficial de actuación parlamentaria. Cada referencia (tomo / página / diario de sesión) enlaza al expediente original.</p>
+    <div class="sec-content" id="content-actuacion">
+      <div class="timeline" id="timeline"></div>
+      <p class="note">Esta línea de tiempo es una selección curada de los hitos más relevantes de los primeros ~8 meses de mandato (de un registro oficial que continúa hasta hoy). <a href="https://parlamento.gub.uy/camarasycomisiones/legisladores/11597/actuacion-legislador" target="_blank">Ver el registro completo y actualizado →</a></p>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section id="proyectos">
+    <div class="sec-head" data-target="content-proyectos">
+      <span class="sec-num">04</span><h2>Proyectos de ley y resolución presentados</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">21 iniciativas entre el 15 de febrero de 2025 y junio de 2026: leyes, resoluciones, declaraciones y minutas de comunicación.</p>
+    <div class="sec-content" id="content-proyectos">
+      <div class="exp-list" id="proyectos-body"></div>
+    </div>
+  </section>
+
+  <!-- INFORMES -->
+  <section id="informes">
+    <div class="sec-head" data-target="content-informes">
+      <span class="sec-num">05</span><h2>Pedidos de informes</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">Preguntas formales al Poder Ejecutivo, amparadas en la Ley de Acceso a la Información Pública.</p>
+    <div class="sec-content" id="content-informes">
+      <div class="exp-list" id="informes-body"></div>
+    </div>
+  </section>
+
+  <!-- ASISTENCIA -->
+  <section id="asistencia">
+    <div class="sec-head" data-target="content-asistencia">
+      <span class="sec-num">06</span><h2>Asistencia</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">Citaciones, asistencias y faltas registradas oficialmente, en plenario y en cada comisión que integra.</p>
+    <div class="sec-content" id="content-asistencia">
+      <div class="glance" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px;">
+        <div><div class="num">100%</div><div class="lab">Asistencia en Plenario (62/62)</div></div>
+        <div><div class="num">93%</div><div class="lab">Asistencia en Comisiones (101/109)</div></div>
+        <div><div class="num">7</div><div class="lab">Faltas con aviso (0 sin aviso)</div></div>
+        <div><div class="num">56%</div><div class="lab">Su asistencia más baja: Carcelaria</div></div>
+      </div>
+      <div class="com-list">
+        <div class="com-row"><div class="name">Plenario — Cámara de Representantes</div><div class="role">100%</div><div class="cuerpo">62 citaciones · 0 faltas</div></div>
+        <div class="com-row"><div class="name">Plenario — Cámara de Senadores (suplencias)</div><div class="role">86%</div><div class="cuerpo">7 citaciones · 1 falta c/aviso</div></div>
+        <div class="com-row"><div class="name">Presupuestos integrada con Hacienda</div><div class="role">100%</div><div class="cuerpo">23 citaciones · 0 faltas</div></div>
+        <div class="com-row"><div class="name">Hacienda integrada con Transporte</div><div class="role">100%</div><div class="cuerpo">5 citaciones · 0 faltas</div></div>
+        <div class="com-row"><div class="name">Relativa a la CJPPU</div><div class="role">100%</div><div class="cuerpo">11 citaciones · 0 faltas</div></div>
+        <div class="com-row"><div class="name">Transporte y Obras Públicas (Senado)</div><div class="role">100%</div><div class="cuerpo">2 citaciones · 0 faltas</div></div>
+        <div class="com-row"><div class="name">Lavado de Activos</div><div class="role">94%</div><div class="cuerpo">17 citaciones · 1 falta c/aviso</div></div>
+        <div class="com-row"><div class="name">Población y Desarrollo</div><div class="role">94%</div><div class="cuerpo">16 citaciones · 1 falta c/aviso</div></div>
+        <div class="com-row"><div class="name">Hacienda</div><div class="role">92%</div><div class="cuerpo">26 citaciones · 1 falta c/aviso</div></div>
+        <div class="com-row"><div class="name">Especial de Seguimiento de la Situación Carcelaria</div><div class="role">56%</div><div class="cuerpo">9 citaciones · 4 faltas c/aviso</div></div>
+      </div>
+      <p class="note">Todas sus faltas (7 en total) fueron <strong>con aviso</strong> — ninguna falta sin aviso, en ningún cuerpo.</p>
+    </div>
+  </section>
+
+  <!-- PRENSA -->
+  <section id="prensa">
+    <div class="sec-head" data-target="content-prensa">
+      <span class="sec-num">07</span><h2>Prensa y entrevistas</h2><span class="chevron">▸</span>
+    </div>
+    <p class="sec-intro">Apariciones en medios encontradas durante esta investigación (no exhaustivo — se amplía con cada actualización).</p>
+    <div class="sec-content" id="content-prensa">
+      <div class="press-grid" id="press-grid"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p><strong>Sobre esta ficha:</strong> construida a partir de fuentes públicas del Parlamento del Uruguay (parlamento.gub.uy) — actuación parlamentaria, proyectos presentados y pedidos de informes — y de prensa abierta. Es un prototipo de lo que será una ficha completa por cada legislador, incluyendo en una próxima versión el texto textual de sus intervenciones en sala extraído de los Diarios de Sesión.</p>
+  <p>Ficha oficial: <a href="https://parlamento.gub.uy/camarasycomisiones/legisladores/11597" target="_blank">parlamento.gub.uy/camarasycomisiones/legisladores/11597</a></p>
+</footer>
+
+<script>
+const timeline = [
+  {fecha:"15 feb 2025", badge:"Inicio de mandato", titulo:"Asume su banca", desc:"Convocado a la Cámara de Representantes por Montevideo para el inicio de la Legislatura L.", ref:"d.s. 4547", video:"https://www.youtube.com/watch?v=yt41dqT4WTc"},
+  {fecha:"17 feb 2025", badge:"Derechos humanos", titulo:"Plantea el caso de un compatriota detenido en Venezuela", desc:"Presenta el caso de Fabián Buglione Reyes, un uruguayo radicado en Estados Unidos desde 2001 que ingresó a Venezuela para visitar a su pareja y desde entonces se encuentra desaparecido.", ref:"d.s. 4548"},
+  {fecha:"14 feb 2025", badge:"Intervención", titulo:"Funda su voto en la elección de Presidente de la Cámara", desc:"Interviene en la discusión sobre la elección de Sebastián Valdomir como Presidente de la Cámara de Representantes.", ref:"d.s. 4548, pág. 39", video:"https://www.youtube.com/watch?v=yt41dqT4WTc&t=14294s"},
+  {fecha:"18 feb 2025", badge:"8 proyectos", titulo:"Presenta un paquete de ocho proyectos de ley el mismo día", desc:"Entre ellos: creación de una Agencia de Desarrollo y Equidad Territorial en Frontera, modificaciones al régimen de elección de alcaldes, regulación del uso de dispositivos electrónicos en ámbitos educativos, y un programa de subsidio de alquiler para jubilados sin vivienda propia.", ref:"d.s. 4549", video:"https://www.youtube.com/watch?v=0EPnmtUS8Lc"},
+  {fecha:"5 mar 2025", badge:"Proyecto", titulo:"Plan Nacional de Seguridad Acuática", desc:"Presenta proyecto encomendando su elaboración al Poder Ejecutivo.", ref:"CRR/64/2025", video:"https://www.youtube.com/watch?v=giMgvRkkQqw"},
+  {fecha:"7–12 mar 2025", badge:"Intervención", titulo:"Propone a Marne Osorio y funda su voto en la elección de las vicepresidencias", desc:"El 7 de marzo propone, en nombre de su bancada, a Marne Osorio para la Primera Vicepresidencia. Los días 11 y 12 funda su voto en la elección de Osorio y de Sylvia Ibarguren (2ª Vicepresidenta).", ref:"d.s. 4550–4552", video:"https://www.youtube.com/watch?v=ofGpaqKPXDk&t=2791s"},
+  {fecha:"14 mar 2025", badge:"Designaciones", titulo:"Funda su voto por la Secretaria y la Prosecretaria de la Cámara", desc:"Vota con confianza por la reelección de la Dra. Virginia Ortiz como secretaria relatora, a quien conoce desde hace más de 10 años, y saluda a Mariana Arias en su nuevo rol al frente de la Mesa de Presidencia.", ref:"d.s. 4554"},
+  {fecha:"28 mar 2025", badge:"Salud pública", titulo:"Interviene sobre la crisis del Casmu y el sistema de salud", desc:"Advierte que los problemas del Casmu no son un caso aislado, sino que reflejan temas estructurales del Sistema Nacional Integrado de Salud que deben revisarse.", ref:"d.s. 4554"},
+  {fecha:"1 abr 2025", badge:"2 proyectos", titulo:"Memorial a las víctimas del 7 de octubre y ley contra la negación del Holocausto", desc:"Presenta un proyecto para erigir un memorial a las víctimas de la masacre del 7-O en Israel, y otro que castiga la negación o banalización del Holocausto judío. Meses después viajaría a Israel en una misión vinculada a estos mismos temas.", ref:"CRR/187 y 188/2025", video:"https://www.youtube.com/watch?v=HvGXGMKa0ZM&t=7461s"},
+  {fecha:"2 abr 2025", badge:"Exposición", titulo:"Media hora previa y proyecto sobre historia laboral", desc:"Realiza una exposición verbal y presenta un proyecto de resolución sobre reconocimiento de servicios no registrados ante el BPS.", ref:"d.s. 4555", video:"https://www.youtube.com/watch?v=dRHN8SX3tfA&t=2824s"},
+  {fecha:"9 abr 2025", badge:"Pasaje al Senado", titulo:"Es convocado como suplente a la Cámara de Senadores", desc:"Cubre una banca en el Senado por el Partido Colorado (sublema Vamos Uruguay), en sustitución del titular Tabaré Viera Duarte.", ref:"tomo 662"},
+  {fecha:"2 may 2025", badge:"Debate reglamentario", titulo:"Defiende el cumplimiento del Reglamento en el estudio de un proyecto", desc:"Interviene varias veces respondiendo alusiones de otros diputados, insistiendo en que no se respetó el artículo 131 del Reglamento (que exige avisar a los autores de un proyecto cuándo se inicia su estudio en comisión). Señala que su \"obsesión\" es el cumplimiento del Reglamento.", ref:"d.s. 4559"},
+  {fecha:"22 may 2025", badge:"Homenaje", titulo:"Interviene en homenaje a Hugo Fernández Faingold", desc:"Participa de exposiciones verbales y designaciones de autoridades de la Cámara.", ref:"d.s. 4562", video:"https://www.youtube.com/watch?v=Pbbv4j-Jxws&t=1684s"},
+  {fecha:"26–28 may 2025", badge:"Comisión", titulo:"Firma y vota la reforma de la Caja de Profesionales Universitarios", desc:"Firma con salvedades en comisión y participa en la discusión general y particular de la modificación a la Ley Orgánica de la CJPPU.", ref:"CRR/266/2025", video:"https://www.youtube.com/watch?v=wWyoVKIfGf4&t=8168s"},
+  {fecha:"12 jun 2025", badge:"Rendición de Cuentas", titulo:"Firmante en la Comisión de Presupuesto integrada con Hacienda", desc:"Rendición de Cuentas y Balance de Ejecución Presupuestal del ejercicio 2024.", ref:"CRR/537/2025"},
+  {fecha:"18 jun 2025", badge:"Fundamento de voto", titulo:"Funda su voto sobre un informe de la Comisión de Asuntos Internacionales", desc:"Vota a favor sin intervenir en el debate, suscribiendo el informe presentado por la diputada Adriana Peña; aclara públicamente algunas inexactitudes que circularon sobre el tema.", ref:"d.s. 4569", video:"https://www.youtube.com/watch?v=RNEc7zYQA_4"},
+  {fecha:"4 jul 2025", badge:"Despedida", titulo:"Despide al diputado Alejo Umpiérrez, que renuncia a su banca", desc:"Interviene con palabras de despedida a un compañero que deja de participar de las deliberaciones de la Cámara.", ref:"d.s. 4572"},
+  {fecha:"15 jul 2025", badge:"Debate", titulo:"Interviene en el debate sobre derechos del niño", desc:"Participa de la discusión sobre la Convención de los Derechos del Niño, repasando la historia de la protección de la infancia. Su bancada (Partido Colorado) vota en contra de un artículo específico del proyecto, por considerar que necesita una redacción más clara.", ref:"d.s. 4575", video:"https://www.youtube.com/watch?v=pBHC8wMqDDo"},
+  {fecha:"1 ago 2025", badge:"Frontera", titulo:"Interviene sobre medidas de fomento al comercio fronterizo", desc:"Apoya el proyecto que busca atender la asimetría económica con Brasil y Argentina, recordando que Uruguay introdujo el sistema de free shop en la frontera ya en 1987, durante el primer gobierno de Sanguinetti.", ref:"d.s. 4576"},
+  {fecha:"5 ago 2025", badge:"3 proyectos", titulo:"Voto secreto en conflictos laborales, mandato del Fiscal de Corte y Uruguay Impulsa", desc:"Presenta tres proyectos e interviene en varias discusiones generales, incluida la creación del programa Uruguay Impulsa.", ref:"d.s. 4576", video:"https://www.youtube.com/watch?v=yH3qBYEP_fc&t=10451s"},
+  {fecha:"6 ago 2025", badge:"3 intervenciones", titulo:"Seguridad social, homenaje y Uruguay Impulsa como política de Estado", desc:"Interviene sobre la Comisión de Expertos en Seguridad Social (creada por el gobierno anterior vía la Ley de Urgente Consideración), se suma a un homenaje a una destacada dirigente colorada fallecida, y argumenta que este tipo de programas debe entenderse como política de Estado, más allá del gobierno de turno.", ref:"d.s. 4577", video:"https://www.youtube.com/watch?v=WguTPXWqtf8&t=1773s"},
+  {fecha:"12–13 ago 2025", badge:"Debate histórico", titulo:"Vota a favor de la ley de eutanasia", desc:"Interviene en la discusión general y particular del proyecto que regula la eutanasia, aprobado tras más de 14 horas de sesión. También presenta, ese mismo período, un pedido de informes sobre el realojo de Alfonso Lamas–Barros Arana. El 13 de agosto interviene además sobre una moción de interpelación al Ministro de Ambiente (impulsada por toda la oposición) y sobre un proyecto que vuelve a tratarse en tercera Cámara.", ref:"d.s. 4578–4579", video:"https://www.youtube.com/watch?v=D2LyMy6LKIw&t=28982s"},
+  {fecha:"15 ago 2025", badge:"Interpelación", titulo:"El Ministro de Ambiente se queda sin respaldo de la Cámara tras una interpelación de 21 horas", desc:"Como integrante de la Comisión Especial de Ambiente, interroga al ministro sobre el proyecto de toma de agua potable del Río de la Plata en Arazatí (San José). Vota en contra de dos de las tres mociones finales — el ministro termina sin el respaldo de la Cámara de Diputados.", ref:"d.s. 4581"},
+  {fecha:"29 ago 2025", badge:"Comisión preinvestigadora", titulo:"Debate sobre el antecedente de la comisión investigadora de la Estancia María Dolores", desc:"Participa de la discusión sobre cuándo debería empezar a trabajar la comisión preinvestigadora planteada el 13 de agosto por el diputado Juan Martín Jorge, sobre la compra de la Estancia María Dolores por el Instituto Nacional de Colonización. La comisión formal recién se crearía meses después.", ref:"d.s. 4582"},
+  {fecha:"9 sep 2025", badge:"Proyecto", titulo:"Homenaje al Dr. Alejandro Atchugarry", desc:"Presenta proyecto para designar con su nombre un viaducto en la rambla portuaria de Montevideo.", ref:"CRR/1001/2025", video:"https://www.youtube.com/watch?v=yRLJ8FkwLrw&t=9421s"},
+  {fecha:"29 set 2025", badge:"Homenaje", titulo:"Homenaje al ex diputado Gustavo \"Tato\" Olmos", desc:"Recuerda a su excolega, fallecido inesperadamente, como un hombre de buen humor y optimismo, capaz de ayudar a otros incluso desde la oposición.", ref:"d.s. 4583"},
+  {fecha:"1 oct 2025", badge:"Proyecto", titulo:"Declaración por el ataque a la fiscal Mónica Ferrero", desc:"Presenta proyecto de resolución condenando el ataque, aprobado el mismo día.", ref:"CRR/1172/2025", video:"https://www.youtube.com/watch?v=Gv_Z_BzK0Zg&t=4720s"},
+  {fecha:"9–16 oct 2025", badge:"30+ intervenciones", titulo:"Discusión particular del Presupuesto Nacional 2025–2029", desc:"Participa intensivamente, artículo por artículo, en el debate del Presupuesto Nacional — la instancia de mayor actividad registrada en este período.", ref:"d.s. 4585–4592", video:"https://www.youtube.com/watch?v=LtMm4I7dUJ4&t=36389s"},
+  {fecha:"31 oct 2025", badge:"Homenaje", titulo:"Homenaje al ex diputado Juan Carlos \"Carlucho\" Moreno", desc:"Recuerda a su excolega, recientemente fallecido, como un hombre joven, trabajador y afable.", ref:"d.s. 4593"},
+  {fecha:"4–21 nov 2025", badge:"Interpelación", titulo:"Miembro interpelante a la Ministra de Salud Pública", desc:"Integra la interpelación a la Ministra Cristina Lustemberg, por incompatibilidad de cargos en la conducción de ASSE. El debate se extiende por varias sesiones; el 21 de noviembre señala que, una vez más, una ministra se va sin el respaldo de la Cámara.", ref:"Interpelación 04-11-2025", video:"https://www.youtube.com/watch?v=M_1D2Bdi_aE&t=4367s"},
+  {fecha:"11 nov – 17 dic 2025", badge:"Comisión", titulo:"Discusión de la Ley de Lavado de Activos", desc:"Participa de varias sesiones de debate, en su rol de miembro de la Comisión de Lavado de Activos.", ref:"varios d.s."},
+  {fecha:"9 dic 2025", badge:"Presupuesto", titulo:"Votación final del Presupuesto Nacional", desc:"Participa de la vuelta del Presupuesto desde el Senado, en su tramo final de aprobación.", ref:"d.s. dic 2025", video:"https://www.youtube.com/watch?v=f7xz38bW7QY&t=9160s"},
+  {fecha:"16 dic 2025", badge:"Jornada activa", titulo:"Discute proyectos sobre IA en campañas electorales y deudas tras el atentado a la fiscal Ferrero", desc:"Defiende la presencia de la oposición que permitió levantar el receso de una sesión; respalda un proyecto sobre contenidos falsos generados con IA en campañas electorales (retomando un trabajo de la legislatura anterior), y otro impulsado en el Senado tras el atentado contra la fiscal Mónica Ferrero.", ref:"d.s. 4597"},
+  {fecha:"10 dic 2025", badge:"Pasaje al Senado", titulo:"Vuelve a ser convocado a la Cámara de Senadores", desc:"Mismo día en que se conoce la renuncia a su banca de la diputada Ana María Olivera Pessano.", ref:"tomo dic 2025"},
+  {fecha:"15 ene 2026", badge:"3 pedidos de informes", titulo:"Presenta tres pedidos de informes el mismo día", desc:"Sobre tasas de suicidio en el país, demoras en turnos del Registro Civil, y suicidios de hombres vinculados a violencia de género. También interviene sobre la autorización de ingreso del buque hospital chino Arca de la Paz.", ref:"Asuntos 170576, 170593, 170598", video:"https://www.youtube.com/watch?v=w6JoLv9zuxk"},
+  {fecha:"18 feb 2026", badge:"Pasaje al Senado", titulo:"Vuelve a cubrir una banca en el Senado", desc:"En sustitución del titular Tabaré Viera Duarte.", ref:"tomo feb 2026"},
+  {fecha:"23 feb 2026", badge:"Proyecto + 3 intervenciones", titulo:"Presenta proyecto sobre multas por exceso de velocidad", desc:"Además interviene en tres oportunidades en la discusión de la Ley de Lavado de Activos.", ref:"CSS 556 / CRR 1810/2026", video:"https://www.youtube.com/watch?v=-ZdTdLVi5SU&t=8695s"},
+  {fecha:"26 feb 2026", badge:"Intervención", titulo:"Interviene sobre el acuerdo Mercosur–Unión Europea", desc:"Se refiere al acuerdo comercial como una cuestión política de fondo para la región.", ref:"d.s. 4609", video:"https://www.youtube.com/watch?v=UjibSmhl47A&t=13564s"},
+  {fecha:"1 mar – 7 abr 2026", badge:"4 votaciones", titulo:"Funda su voto en la renovación de la Mesa de la Cámara", desc:"Participa de la reelección de Rodrigo Goñi como Presidente para el 2º período, y de la elección de los tres Vicepresidentes: Margarita Libschitz, Fermín Farinha y Federico Preve Cocco. El 2 de marzo, además, presenta junto a los diputados Álvaro Perrone y Sebastián Andújar su proyecto sobre multas por exceso de velocidad.", ref:"d.s. 4610–4617", video:"https://www.youtube.com/watch?v=Qcl6cmAmFFA&t=5307s"},
+  {fecha:"10 abr 2026", badge:"Asuntos Internacionales", titulo:"Informa dos proyectos internacionales y participa del homenaje al Día de las Américas", desc:"Como integrante de la Comisión de Asuntos Internacionales, presenta ante el plenario un acuerdo de traslado de personas condenadas con Bolivia y Chile, y un acuerdo de servicios aéreos con Costa Rica.", ref:"d.s. 4618"},
+  {fecha:"11 mar 2026", badge:"Comisión investigadora", titulo:"Funda su voto en la creación de una Comisión Investigadora", desc:"Sobre presuntas irregularidades del Instituto Nacional de Colonización en la compra de los padrones de la Estancia María Dolores.", ref:"CRR/2035/2026", video:"https://www.youtube.com/watch?v=bdFe8wxeB4k&t=23344s"},
+  {fecha:"15 abr 2026", badge:"Firmante + intervención", titulo:"Participa en la aprobación del aumento de capital del BID", desc:"Banco Interamericano de Reconstrucción y Fomento.", ref:"CRR/2219/2026", video:"https://www.youtube.com/watch?v=NdA-2ZqPybI&t=6506s"},
+  {fecha:"29 abr – 12 may 2026", badge:"Miembro informante", titulo:"Lleva la voz del proyecto de Multas por Exceso de Velocidad", desc:"Es designado informante en comisión y luego defiende el proyecto en discusión general y particular en el plenario.", ref:"CRR/1810/2026"},
+  {fecha:"5 may 2026", badge:"Interpelación", titulo:"Interviene en la interpelación al Ministro de Desarrollo Social", desc:"Sobre el sistema de protección de niños y adolescentes bajo tutela del Estado (INAU).", ref:"CRR/2304/2026", video:"https://www.youtube.com/watch?v=p_0EueiqYbY&t=2193s"},
+  {fecha:"12 may 2026", badge:"Jornada activa", titulo:"Homenaje, Uruguay Impulsa y multas por exceso de velocidad", desc:"En un mismo día: homenaje a Zelmar Michelini y Héctor Gutiérrez Ruiz, pedido de implementación del programa Uruguay Impulsa, y defensa del proyecto de multas.", ref:"d.s. 4625–4626"},
+  {fecha:"9 jun 2026", badge:"Homenaje + pedido", titulo:"Homenaje a Hugo Batalla y pedido de informes sobre BPS y AFAP", desc:"Presenta una iniciativa por los 100 años del nacimiento de Hugo Batalla, y el pedido de informes sobre aportes jubilatorios.", ref:"CRR/2663/2026", video:"https://www.youtube.com/watch?v=GfEyPjK4JUk"},
+  {fecha:"17 jun 2026", badge:"Firmante", titulo:"Firmante en Hacienda: facilidades de pago de adeudos con el BPS", desc:"Aprobación de un régimen de facilidades para cancelar deudas con el Banco de Previsión Social.", ref:"CRR/2726/2026"},
+];
+
+const tlEl = document.getElementById('timeline');
+timeline.forEach(item=>{
+  const div = document.createElement('div');
+  div.className = 'tl-item';
+  const videoHTML = item.video
+    ? ` · <a href="${item.video}" target="_blank">▶ ${item.video.includes('&t=') ? 'Ver su intervención exacta en YouTube' : 'Ver sesión completa en YouTube'}</a>`
+    : '';
+  div.innerHTML = `
+    <div><span class="tl-date">${item.fecha}</span><span class="tl-badge">${item.badge}</span></div>
+    <div class="tl-title">${item.titulo}</div>
+    <div class="tl-desc">${item.desc}</div>
+    <div class="tl-ref">${item.ref}${videoHTML}</div>
+  `;
+  tlEl.appendChild(div);
+});
+
+const proyectos = [
+  {t:"Designación del Directorio de la Junta de Transparencia y Ética Pública", f:"16-06-2026", c:"CRR 2706/2026", e:"comision", estado:"En comisión",
+   resumen:"Propone el procedimiento y los nombres para integrar el directorio de este organismo de control."},
+  {t:"Multas por exceso de velocidad — modificación art. 26 bis Ley 19.824", f:"23-02-2026", c:"CSS 556 · CRR 1810/2026", e:"comision", estado:"Tratamiento postergado",
+   resumen:"Ajusta el régimen sancionatorio de tránsito para infracciones por exceso de velocidad."},
+  {t:'"Bullying" y "ciberbullying" en instituciones de enseñanza — normas de prevención', f:"18-11-2025", c:"CRR 1407/2025", e:"comision", estado:"En comisión",
+   resumen:"Crea un marco normativo de prevención, detección y abordaje del acoso escolar, presencial y digital, en centros educativos públicos y privados."},
+  {t:"Ataque a la fiscal de Corte Mónica Ferrero — Declaración", f:"01-10-2025", c:"CRR 1172/2025", e:"aprobado", estado:"Resolución aprobada",
+   resumen:"Resolución de condena al ataque sufrido por la fiscal, aprobada por la Cámara el mismo día de su presentación."},
+  {t:"Dr. Alejandro Atchugarry — designación de viaducto", f:"09-09-2025", c:"CRR 1001/2025", e:"aprobado", estado:"Promulgado por el Ejecutivo",
+   resumen:"Designa con el nombre del ex ministro de Economía un viaducto de la rambla portuaria de Montevideo."},
+  {t:"Reducción del IMESI sobre naftas en zonas fronterizas con Argentina", f:"05-08-2025", c:"CRR 845/2025", e:"archivado", estado:"Archivado a pedido de la Comisión",
+   resumen:"Buscaba atenuar el impacto del turismo de compras y abastecimiento en localidades fronterizas."},
+  {t:"Duración del mandato del Fiscal de Corte y del Director de Fiscalía", f:"05-08-2025", c:"CRR 798/2025", e:"comision", estado:"En comisión",
+   resumen:"Retoma una iniciativa que Rodríguez ya había presentado en 2024, sobre acortar el mandato de 10 a 5-6 años."},
+  {t:"Aplicación del voto secreto en conflictos laborales", f:"05-08-2025", c:"CRR 783/2025", e:"comision", estado:"En comisión",
+   resumen:"Propone garantizar el voto secreto de los trabajadores en asambleas que resuelven medidas gremiales."},
+  {t:"Extensión de plazo para reconocimiento de servicios no registrados (BPS)", f:"02-04-2025", c:"CRR 217/2025", e:"aprobado", estado:"Resolución aprobada",
+   resumen:"Amplía el período en que un trabajador puede solicitar al BPS el reconocimiento de aportes no registrados por su empleador."},
+  {t:"Holocausto judío y genocidios — se castiga su negación o banalización", f:"01-04-2025", c:"CRR 188/2025", e:"comision", estado:"En comisión",
+   resumen:"Tipifica como delito la negación, justificación o banalización pública del Holocausto y otros genocidios. Presentado junto al memorial de la masacre del 7-O; meses después viajaría a Israel en una misión vinculada a estos temas."},
+  {t:"Víctimas de la masacre en Israel del 7-O — memorial", f:"01-04-2025", c:"CRR 187/2025", e:"comision", estado:"En comisión",
+   resumen:"Propone erigir en Uruguay un memorial a las víctimas del ataque del 7 de octubre de 2023 en Israel."},
+  {t:"Plan Nacional de Seguridad Acuática", f:"05-03-2025", c:"CRR 64/2025", e:"comision", estado:"En comisión",
+   resumen:"Encomienda al Poder Ejecutivo elaborar un plan nacional de prevención de ahogamientos y seguridad en espejos de agua."},
+  {t:"Oferta educativa en regiones fronterizas con Brasil", f:"18-02-2025", c:"CRR 30/2025", e:"comision", estado:"En comisión",
+   resumen:"Promueve el fortalecimiento de la oferta educativa pública en localidades de frontera con Brasil."},
+  {t:"Paso Ataques — se eleva a categoría de centro poblado", f:"18-02-2025", c:"CRR 29/2025 · CSS 429/2025", e:"aprobado", estado:"Promulgado por el Ejecutivo",
+   resumen:"Eleva la categoría administrativa de la localidad de Paso Ataques."},
+  {t:"Elección de alcaldes y concejales — modificación Ley 19.272", f:"18-02-2025", c:"CRR 28/2025", e:"comision", estado:"En comisión",
+   resumen:"Modifica aspectos del régimen electoral municipal vigente desde la Ley de Descentralización."},
+  {t:"Uso de tecnología y dispositivos electrónicos en ámbitos educativos", f:"18-02-2025", c:"CRR 39/2025", e:"comision", estado:"En comisión",
+   resumen:"Regula el uso de celulares y dispositivos electrónicos dentro de los centros educativos."},
+  {t:"Agencia de Desarrollo y Equidad Territorial en Frontera — creación", f:"18-02-2025", c:"CRR 27/2025", e:"comision", estado:"En comisión",
+   resumen:"Crea un organismo específico para coordinar políticas de desarrollo en los departamentos de frontera."},
+  {t:"Acceso a la vivienda para jubilados y pensionistas sin bienes inmuebles", f:"18-02-2025", c:"CRR 45/2025", e:"comision", estado:"En comisión",
+   resumen:"Crea un subsidio de alquiler dirigido a pasivos que no tengan vivienda propia."},
+  {t:"Afiliados al BPS en régimen previsional mixto — ley interpretativa", f:"18-02-2025", c:"CRR 44/2025", e:"comision", estado:"En comisión",
+   resumen:"Aclara por ley la aplicación de ciertos aspectos del régimen mixto de jubilación."},
+  {t:"Designación de personal presupuestado por gobiernos departamentales", f:"18-02-2025", c:"CRR 34/2025 · CSS 235/2025", e:"comision", estado:"Fundamento de voto",
+   resumen:"Habilita o regula designaciones de funcionarios presupuestados a nivel departamental."},
+  {t:"Elecciones departamentales y municipales — modificación Ley 18.644", f:"18-02-2025", c:"CRR 43/2025", e:"comision", estado:"En comisión",
+   resumen:"Ajusta aspectos del calendario o procedimiento electoral departamental y municipal."},
+];
+
+function crearExpRow(titulo, metaCols, badge, detalleHTML){
+  const row = document.createElement('div');
+  row.className = 'exp-row';
+  const head = document.createElement('div');
+  head.className = 'exp-head';
+  head.innerHTML = `
+    <div class="exp-title"><span class="mini-chevron">▸</span>${titulo}</div>
+    ${metaCols}
+  `;
+  const body = document.createElement('div');
+  body.className = 'exp-body';
+  body.innerHTML = detalleHTML;
+  head.addEventListener('click', ()=>{
+    const open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    head.classList.toggle('open', !open);
+  });
+  row.appendChild(head);
+  row.appendChild(body);
+  return row;
+}
+
+const pBody = document.getElementById('proyectos-body');
+proyectos.forEach(p=>{
+  const metaCols = `<div class="carpeta">${p.f}</div><div class="estado ${p.e}">${p.estado}</div>`;
+  const detalle = `
+    <span class="label">De qué se trata</span>
+    <div class="val">${p.resumen}</div>
+    <span class="label">Carpeta</span>
+    <div class="val carpeta">${p.c}</div>
+    <span class="label">Fuente</span>
+    <div class="val"><a href="https://parlamento.gub.uy/camarasycomisiones/legisladores/11597/iniciativas-legislador" target="_blank">Ver listado oficial de iniciativas →</a></div>
+  `;
+  pBody.appendChild(crearExpRow(p.t, metaCols, p.e, detalle));
+});
+
+const informes = [
+  {t:"Aspectos vinculados a los aportes jubilatorios entre BPS y las AFAP", f:"05-06-2026", asunto:"173432", org:"MTSS", estado:"Pendiente de respuesta", cls:"comision",
+   contexto:"Pregunta por la distribución y el destino de los aportes jubilatorios entre BPS y las administradoras privadas (AFAP). Se vincula con un reclamo público suyo, meses antes, sobre la bonificación que el Estado se había comprometido a otorgar a los llamados \"cuarentones\" en sus jubilaciones servidas por BPS — un compromiso que, según señaló, no se estaba cumpliendo."},
+  {t:"Régimen de ahorro individual jubilatorio — solicitudes de asesoramiento y revocaciones", f:"24-04-2026", asunto:"172359", org:"MTSS", estado:"Pendiente de respuesta", cls:"comision",
+   contexto:"Consulta cuántas personas solicitaron asesoramiento al BPS para evaluar mantener o revocar la opción del Artículo 8 de la Ley 16.713 (que define cómo se reparten los aportes entre BPS y AFAP), un trámite que solo pueden iniciar afiliados de entre 40 y 49 años con determinada historia laboral."},
+  {t:"Tasas de suicidio e información complementaria en el país", f:"15-01-2026", asunto:"170576", org:"OPP", estado:"Respondido — 01-03-2026", cls:"aprobado",
+   contexto:"Solicita series estadísticas oficiales sobre suicidios en Uruguay. El país tiene una de las tasas más altas del mundo: 21,35 por cada 100.000 habitantes en 2024 según el MSP (3 de cada 4 casos, hombres), con mayor incidencia en personas mayores de 75 años y en el tramo de 20 a 24 años."},
+  {t:"Disponibilidad de turnos en línea — inscripción de partidas extranjeras", f:"15-01-2026", asunto:"170593", org:"MEC", estado:"Respondido — 23-02-2026", cls:"aprobado",
+   contexto:"Pregunta por demoras y disponibilidad de turnos en la agenda en línea de la Dirección General del Registro de Estado Civil para inscribir en Uruguay partidas de nacimiento extranjeras."},
+  {t:"Suicidios de hombres con medidas cautelares o antecedentes de violencia de género", f:"15-01-2026", asunto:"170598", org:"Suprema Corte de Justicia", estado:"Respondido — 10-03-2026", cls:"aprobado",
+   contexto:"Indaga si el Poder Judicial cuenta con información que cruce los suicidios masculinos del país con procesos previos por violencia doméstica o de género. Los hombres representan entre el 75% y el 76% de los suicidios registrados anualmente en Uruguay."},
+  {t:"Situación del realojo de Alfonso Lamas – Barros Arana", f:"13-08-2025", asunto:"168211", org:"MVOT", estado:"Respondido — 04-11-2025", cls:"aprobado",
+   contexto:"Pregunta por el estado del realojo del asentamiento Alfonso Lamas y Barros Arana, en Flor de Maroñas — 49 familias (164 personas) que llevaban años esperando, con el proceso frenado por falta de fondos del MVOT según denunciaron ediles meses antes. El proceso finalmente se completó: en diciembre de 2025 las familias se mudaron al nuevo Complejo Habitacional Tobas."},
+];
+
+const iBody = document.getElementById('informes-body');
+informes.forEach(p=>{
+  const metaCols = `<div class="carpeta">${p.org}</div><div class="estado ${p.cls}">${p.estado}</div>`;
+  const detalle = `
+    <span class="label">Qué pregunta</span>
+    <div class="val">${p.contexto}</div>
+    <span class="label">Ingreso</span>
+    <div class="val carpeta">${p.f}</div>
+    <span class="label">Ficha oficial (Asunto N.º ${p.asunto})</span>
+    <div class="val"><a href="https://parlamento.gub.uy/documentosyleyes/ficha-asunto/${p.asunto}" target="_blank">Ver expediente completo y respuesta →</a></div>
+  `;
+  iBody.appendChild(crearExpRow(p.t, metaCols, p.cls, detalle));
+});
+
+const prensa = [
+  {fecha:"03 dic 2025", titulo:"Diputados uruguayos en Israel — entrevista sobre la misión oficial", src:"El Telégrafo / Semanario Hebreo Jai (vía CCIU)"},
+  {fecha:"16 ago 2024", titulo:"Entrevistamos a Conrado Rodríguez, diputado del Partido Colorado", src:"#ModoPaís — Medios Públicos (YouTube)"},
+  {fecha:"29 nov 2023", titulo:"Entrevista a Conrado Rodríguez, diputado del Partido Colorado", src:"La Entrevista — Medios Públicos (YouTube)"},
+  {fecha:"09 nov 2023", titulo:"Entrevistamos al diputado del Partido Colorado, Conrado Rodríguez", src:"#Buscadores — Medios Públicos (YouTube)"},
+  {fecha:"—", titulo:"Conrado Rodríguez — biografía y trayectoria legislativa", src:"Wikipedia"},
+  {fecha:"—", titulo:"Conrado Rodríguez estuvo en la mañana de la diaria", src:"la diaria"},
+];
+const pressGrid = document.getElementById('press-grid');
+prensa.forEach(p=>{
+  const div = document.createElement('div');
+  div.className = 'press-card';
+  div.innerHTML = `<div class="press-date">${p.fecha}</div><div class="press-title">${p.titulo}</div><div class="press-src">${p.src}</div>`;
+  pressGrid.appendChild(div);
+});
+
+/* ---------- ACORDEÓN: abrir/cerrar secciones al hacer clic en el título ---------- */
+document.querySelectorAll('.sec-head').forEach(head=>{
+  const targetId = head.getAttribute('data-target');
+  const content = document.getElementById(targetId);
+  if(!content) return;
+
+  head.setAttribute('role','button');
+  head.setAttribute('tabindex','0');
+  head.setAttribute('aria-expanded','false');
+
+  function toggle(){
+    const isOpen = content.classList.contains('open');
+    content.classList.toggle('open', !isOpen);
+    head.classList.toggle('open', !isOpen);
+    head.setAttribute('aria-expanded', String(!isOpen));
+  }
+
+  head.addEventListener('click', toggle);
+  head.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      toggle();
+    }
+  });
+});
+
+/* La primera sección (Comisiones) arranca abierta, como pista de que es desplegable */
+document.querySelector('[data-target="content-comisiones"]').click();
+</script>
+</body>
+</html>
