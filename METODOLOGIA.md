@@ -167,12 +167,126 @@ Caso piloto: Conrado Rodríguez (Partido Colorado, Montevideo, ID 11597).
 
 ---
 
-## 4. Pendientes conocidos (al cierre de esta etapa)
+## 4. Minuto exacto en YouTube — lecciones de la sesión de pulido
+
+### 5.1. Jerarquía de métodos (del más al menos confiable)
+1. **Capítulos manuales en la descripción**: cuando existen, son 100% confiables.
+   Buscar "Apellido, Nombre" (ej. "Rodríguez, Conrado") en el texto de la
+   descripción expandida.
+2. **Búsqueda en la transcripción completa** (botón "Mostrar transcripción",
+   no la descripción): a veces el video no tiene capítulos pero la
+   transcripción automática sí capturó el nombre en algún anuncio del
+   Presidente ("tiene la palabra el diputado...", "Diputado Conrado
+   Rodríguez, me pide la palabra"). Se puede leer todo el panel con
+   JavaScript (`document.querySelector('#panels').innerText`) y buscar el
+   nombre ahí, sin necesidad de tipear en el buscador del panel.
+3. **Subtítulos quemados en la imagen** (capturas de pantalla): algunos
+   videos muestran un cartel con nombre+partido+departamento en la parte
+   inferior cuando alguien habla (confirmado en una sesión de marzo 2025
+   con captura de pantalla del usuario) — pero no en todos los videos ni
+   en todo momento, no se puede asumir que siempre esté.
+4. **Script automático con transcripción de YouTube + matching de texto**:
+   funciona mal en la práctica (probamos 3 versiones de algoritmo, ninguna
+   superó al método manual). Mejor abandonar este camino salvo que se
+   encuentre una idea mejor.
+
+### 5.2. ¡CUIDADO! Encontrar el nombre NO basta — hay que confirmar el tema
+Error real que cometimos: buscamos "Conrado" en la transcripción, encontramos
+una mención, y asumimos que ahí hablaba del tema que buscábamos (derechos del
+niño). En realidad era un momento totalmente distinto y menor: pedía que se
+**rectificara una votación** sobre un tema no relacionado (designación de un
+liceo). **Siempre hay que leer el contexto alrededor de la mención** (qué se
+dice 200-500 caracteres antes y después) para confirmar que coincide con el
+tema real de la intervención que se está documentando, antes de aplicar el
+timestamp. Si no coincide, mejor no poner timestamp que poner uno equivocado.
+
+### 5.3. Doble chequeo de identidad (hay 3 diputados "Rodríguez")
+Antes de atribuirle a Conrado un texto encontrado por apellido pelado
+("RODRÍGUEZ"), verificar dentro del propio texto:
+- **Partido**: si dice "bancada del Partido Nacional" o similar, NO es
+  Conrado (es del Partido Colorado). Encontramos 2 casos reales así.
+- **Departamento**: si menciona representar o ser de otro departamento
+  (ej. "mi departamento de Salto"), tampoco es Conrado (representa
+  Montevideo). Encontramos 1 caso real así.
+- Para el método automático "tiene la palabra...Apellido", agregar también
+  el **nombre de pila** a la búsqueda (no solo el apellido) resuelve gran
+  parte de esta ambigüedad de entrada, porque el Presidente generalmente
+  dice nombre y apellido completos.
+
+### 5.4. Aprovechar archivos ya scrapeados antes de salir a buscar en internet
+Cuando ya se tiene `intervenciones_diputados_uruguay.xlsx` (con el texto real
+de cada intervención) y `videos_sesiones.xlsx` (catálogo de videos con fecha),
+se puede cruzar AMBOS localmente, sin gastar ninguna búsqueda de internet, para:
+- Mapear fecha → video_id directamente (cruzando por fecha normalizada)
+- Leer el texto real de lo que dijo, para escribir la descripción del hito
+  sin tener que volver a buscar el diario en la web
+Ojo con los formatos de fecha con ordinal ("1° de agosto" en vez de "1 de
+agosto") — hay que normalizar ambas variantes al cruzar.
+
+### 5.5. Votaciones de Presidente/Vicepresidentes — tip del usuario
+En estas votaciones, el orden de los fundamentos de voto suele ser
+**alfabético por apellido** (A→Z, o a veces Z→A), y **arranca con alguien
+proponiendo al candidato**, seguido de los demás legisladores fundamentando
+su voto uno por uno. Sirve para estimar en qué franja del video buscar.
+
+### 5.6. Comisión Carcelaria — recordatorio
+Depende de la **Asamblea General**, no de la Cámara de Representantes. Usa
+`asambleageneral` en vez de `representantes` tanto en la URL del listado como
+en la URL de cada documento (`.../versiones-taquigraficas/asambleageneral/50/{N}/0`).
+El script `scraper_comisiones.py` ya soporta esto vía el campo `"ambito"` en
+el diccionario `COMISIONES`.
+
+
+## 5. Pendientes conocidos (actualizado)
 
 1. Completar fechas faltantes en intervenciones de comisiones (~50%)
 2. Integrar las intervenciones de comisiones a la página web de Conrado
-3. Terminar (o aceptar las limitaciones de) el buscador de minuto exacto
-4. Verificar cuántas de las intervenciones de comisiones son específicamente
+3. Verificar cuántas de las intervenciones de comisiones son específicamente
    de Conrado (la planilla trae a TODOS los que hablaron, no solo a él)
-5. Replicar todo este proceso para el resto de los 99 diputados — **a
+4. Terminar de pulir los minutos exactos que faltan en el plenario (quedan
+   pocos, principalmente videos sin transcripción habilitada o sin mención
+   reconocible de su nombre)
+5. Buscar la declaración jurada de Conrado — no está publicada por la JUTEP
+   por un vacío legal de fechas (la ley entró en vigencia el 1° de marzo de
+   2026, pero esta legislatura asumió el 15 de febrero)
+6. Replicar todo este proceso para el resto de los 99 diputados — **a
    propósito, pausado hasta terminar de pulir este caso piloto**
+7. Extender el proceso a los 30 senadores (fase posterior a los diputados)
+8. Plan de negocio / monetización — queda para el final de todo
+
+## 6. ¡Cuidado con los apellidos legales completos!
+
+Descubrimos que Conrado Rodríguez tiene un apellido legal compuesto:
+**"Rodríguez Merlo"** — su nombre completo real es "Conrado Hernán Rodríguez
+Merlo" (confirmado en Wikipedia). En la vida política y en los diarios de
+sesión SIEMPRE aparece como "Rodríguez" a secas, pero en sistemas más
+formales y administrativos (como la JUTEP) puede aparecer bajo el apellido
+completo, lo que casi nos hace perder su declaración jurada — la dimos por
+"no publicada" cuando en realidad SÍ estaba, solo que bajo "Rodríguez Merlo"
+en vez de "Rodríguez".
+
+**Para los próximos 98 diputados**: antes de concluir que algo "no existe"
+para una persona, buscar también por posibles apellidos compuestos (Wikipedia
+suele tenerlos en la primera línea del artículo) — no asumir que el apellido
+"corto" usado políticamente es el legal completo.
+
+### Dónde están publicadas las declaraciones juradas (JUTEP)
+URL base: `gub.uy/junta-transparencia-etica-publica/comunicacion/publicaciones/publicacion-declaraciones-juradas-bienes-ingresos-camara-{N}`
+donde `{N}` cambia por año (no es secuencial limpio: 2020→sin número o
+"-representantes", 2021→"-1", 2022→"-0", 2025→"-5", 2026→"-6" — conviene
+verificar cada uno). Cada página tiene un PDF individual por diputado, y un
+.zip con todos. **Son PDFs escaneados (imágenes)**, sin texto extraíble por
+los métodos normales — para leer el contenido hay que verlos como imagen
+(captura de pantalla) o buscar herramientas de OCR.
+
+## 7. Recursos externos descubiertos (útiles para fases futuras)
+
+- **datospublicos.uy**: agregador de transparencia de terceros con datos ya
+  armados de los 99 legisladores (asistencia, comisiones al exterior,
+  pedidos de informes, declaraciones juradas, remuneraciones) — revisar
+  antes de scrapear todo de cero para la fase de los 99.
+- **Índice de Esfuerzo Parlamentario** (parlamentodata.com, Programa de
+  Estudios Parlamentarios, Udelar): metodología de ranking basada en
+  z-scores sobre 7 dimensiones — ver `IEP_REFERENCIA.md` para el detalle
+  completo. Útil como inspiración para una futura fase de estadísticas
+  propia, actualizada sesión a sesión (algo que ellos no hacen).
